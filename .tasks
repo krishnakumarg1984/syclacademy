@@ -1,0 +1,137 @@
+# vim: set fenc=utf-8 ft=dosini:
+
+# https://stackoverflow.com/questions/29361801/is-the-lld-linker-a-drop-in-replacement-for-ld-and-gold
+# -fuse-ld=lld
+
+# -Wlifetime                (only special branch of Clang currently) shows object lifetime issues
+# -Wfatal-errors
+# -Waggregate-return
+
+[file-build:debug]
+
+# shell command, use quotation for filenames containing spaces
+# check ":AsyncTaskMacro" to see available macros
+# command=g++ -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)"
+command=echo unsupported filetype $(VIM_FILETYPE)
+command:cpp/linux=gcc -Wall -Wextra -Wextra-semi -Weffc++ -Wcast-align -Wcast-qual -Wconversion -Wctor-dtor-privacy -Wdeprecated-copy-dtor -Wdouble-promotion -Wduplicated-branches -Wduplicated-cond -Wfatal-errors -Wfloat-equal -Wformat=2 -Wformat-signedness -Wformat-truncation=2 -Wlogical-op -Wno-init-list-lifetime -Wnull-dereference -Wold-style-cast -Woverloaded-virtual -Wpedantic -Wshadow -Wsign-conversion -Wsign-promo -Wswitch-default -Wswitch-enum -Wundef -Wunused-macros -Wuseless-cast -pipe "$(VIM_FILEPATH)" -o "$(VIM_PATHNOEXT)".out -lstdc++ -lm -march=native -ldl -std=c++20 -pedantic-errors -g -gdwarf-4 -DDEBUG -O0 -fasynchronous-unwind-tables -fstrict-aliasing -fsanitize=address -fsanitize=undefined -fno-sanitize-recover=all -fsanitize=float-divide-by-zero -fsanitize=float-cast-overflow -fno-sanitize=null -fno-sanitize=alignment -fno-omit-frame-pointer -fstack-clash-protection -fstack-protector-all -fstack-protector-strong -DDBG_MACRO_DISABLE
+command:cpp/macos=gcc -Wall -Wextra -Wextra-semi -Weffc++ -Wcast-align -Wcast-qual -Wconversion -Wctor-dtor-privacy -Wdeprecated-copy-dtor -Wdouble-promotion -Wduplicated-branches -Wduplicated-cond -Wfatal-errors -Wfloat-equal -Wformat=2 -Wformat-signedness -Wformat-truncation=2 -Wlogical-op -Wno-init-list-lifetime -Wnull-dereference -Wold-style-cast -Woverloaded-virtual -Wpedantic -Wshadow -Wsign-conversion -Wsign-promo -Wswitch-default -Wswitch-enum -Wundef -Wunused-macros -Wuseless-cast "$(VIM_FILEPATH)" -o "$(VIM_PATHNOEXT)".out -lstdc++ -lm -msse3 -ldl -std=c++20 -pedantic-errors -g -gdwarf-4 -DDEBUG -O0 -fasynchronous-unwind-tables -fstrict-aliasing -fsanitize=address -fsanitize=undefined -fno-sanitize-recover=all -fsanitize=float-divide-by-zero -fsanitize=float-cast-overflow -fno-sanitize=null -fno-sanitize=alignment -fno-omit-frame-pointer -fstack-clash-protection -fstack-protector-all -fstack-protector-strong -DDBG_MACRO_DISABLE
+
+# working directory, can change to $(VIM_ROOT) for project root
+cwd=$(VIM_FILEDIR)
+
+# output mode, can be one of quickfix and terminal
+# - quickfix: output to quickfix window
+# - terminal: run the command in the internal terminal
+output=quickfix
+
+# this is for output=quickfix only
+# if it is omitted, vim's current errorformat will be used.
+# errorformat=%f:%l:%m
+errorformat=%f(%l) \=: %t%*\D%n: %m,%*[^"]"%f"%*\D%l: %m,%f(%l) \=: %m,%*[^ ] %f %l: %m,%f:%l:%c:%m,%f(%l):%m,%f:%l:%m,%f|%l| %m,[%f:%l] -> %m,[%f:%l]:%m
+
+# save file before execute
+save=2
+
+# define a new task named "file-build"
+[file-build:release]
+
+# shell command, use quotation for filenames containing spaces
+# check ":AsyncTaskMacro" to see available macros
+# command=g++ -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)"
+command=echo unsupported filetype $(VIM_FILETYPE)
+command:cpp/linux=gcc -O2 -Wall -Wextra -Wextra-semi -Weffc++ -Wcast-align -Wcast-qual -Wconversion -Wctor-dtor-privacy -Wdeprecated-copy-dtor -Wdouble-promotion -Wduplicated-branches -Wduplicated-cond -Wfatal-errors -Wfloat-equal -Wformat=2 -Wformat-signedness -Wformat-truncation=2 -Wlogical-op -Wno-init-list-lifetime -Wnull-dereference -Wold-style-cast -Woverloaded-virtual -Wpedantic -Wshadow -Wsign-conversion -Wsign-promo -Wswitch-default -Wswitch-enum -Wundef -Wunused-macros -Wuseless-cast -pipe "$(VIM_FILEPATH)" -o "$(VIM_PATHNOEXT)".out -lstdc++ -lm -march=native -ldl -std=c++20 -pedantic-errors -DNDEBUG -DDBG_MACRO_DISABLE
+command:cpp/macos=gcc -O2 -Wall -Wextra -Wextra-semi -Weffc++ -Wcast-align -Wcast-qual -Wconversion -Wctor-dtor-privacy -Wdeprecated-copy-dtor -Wdouble-promotion -Wduplicated-branches -Wduplicated-cond -Wfatal-errors -Wfloat-equal -Wformat=2 -Wformat-signedness -Wformat-truncation=2 -Wlogical-op -Wno-init-list-lifetime -Wnull-dereference -Wold-style-cast -Woverloaded-virtual -Wpedantic -Wshadow -Wsign-conversion -Wsign-promo -Wswitch-default -Wswitch-enum -Wundef -Wunused-macros -Wuseless-cast "$(VIM_FILEPATH)" -o "$(VIM_PATHNOEXT)".out -lstdc++ -lm -msse3 -ldl -std=c++20 -pedantic-errors -DNDEBUG -DDBG_MACRO_DISABLE
+
+# working directory, can change to $(VIM_ROOT) for project root
+cwd=$(VIM_FILEDIR)
+
+# output mode, can be one of quickfix and terminal
+# - quickfix: output to quickfix window
+# - terminal: run the command in the internal terminal
+output=quickfix
+
+# this is for output=quickfix only
+# if it is omitted, vim's current errorformat will be used.
+# errorformat=%f:%l:%m
+errorformat=%f(%l) \=: %t%*\D%n: %m,%*[^"]"%f"%*\D%l: %m,%f(%l) \=: %m,%*[^ ] %f %l: %m,%f:%l:%c:%m,%f(%l):%m,%f:%l:%m,%f|%l| %m,[%f:%l] -> %m,[%f:%l]:%m
+
+# save file before execute
+save=2
+
+[file-run]
+command="$(VIM_FILEPATH)"
+
+command:c,cpp="$(VIM_PATHNOEXT)".out
+command:make=make -f "$(VIM_FILENAME)" run
+output=terminal
+cwd=$(VIM_FILEDIR)
+save=2
+
+[file-clean]
+command="$(VIM_FILEPATH)"
+
+command:c,cpp=rm -v "$(VIM_PATHNOEXT)".out 2>/dev/null
+cwd=$(VIM_FILEDIR)
+
+[make-filebuild]
+command=make -f "$(VIM_FILEDIR)/Makefile"
+cwd=$(VIM_FILEDIR)
+
+[make-fileall]
+command=make -f "$(VIM_FILEPATH)" all
+cwd=$(VIM_FILEDIR)
+
+[make-fileclean]
+command=make -f "$(VIM_FILEPATH)" clean
+cwd=$(VIM_FILEDIR)
+
+[make-filerun]
+command=make -f "$(VIM_FILEPATH)" run
+cwd=$(VIM_FILEDIR)
+output=terminal
+
+[make-filetest]
+command=make -f "$(VIM_FILEPATH)" test
+cwd=$(VIM_FILEDIR)
+output=terminal
+
+[make-projectbuild]
+command=make
+cwd=$(VIM_ROOT)
+
+[make-projectrun]
+command=make run
+cwd=$(VIM_ROOT)
+output=terminal
+
+[project-test]
+command=make test
+cwd=$(VIM_ROOT)
+output=terminal
+
+# project-wide search, ask user input keyword
+[grep-word]
+command=rg -n --no-heading --color never "$(?keyword)" "<root>" -tcpp -tc -tpy -tvim -tgo -tasm -tlua -tjs
+cwd=$(VIM_ROOT)
+errorformat=%f:%l:%m
+
+# project-wide search, search the word under cursor
+[grep-cword]
+command=rg -n --no-heading --color never "$(VIM_CWORD)" "<root>" -tcpp -tc -tpy -tvim -tgo -tasm -tlua -tjs
+cwd=$(VIM_ROOT)
+errorformat=%f:%l:%m
+
+[cmake-projectinit]
+command=mkdir build && cd build && cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1 .. && ln -s compile_commands.json ..
+cwd=<root>
+errorformat=
+
+[cmake-projectbuild]
+command=cmake --build build
+cwd=<root>
+errorformat=%f:%l:%m
+
+[project-run]
+command="build/$(VIM_PRONAME)"
+cwd=<root>
+output=terminal
