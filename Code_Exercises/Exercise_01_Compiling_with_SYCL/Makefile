@@ -5,6 +5,7 @@ LDFLAGS = -lOpenCL -lsycl
 
 BUFFER_EXE_NAME = exercise01.out
 BUFFER_SOURCES = solution.cpp
+# BUFFER_SOURCES = source.cpp
 
 USM_EXE_NAME = exercise01-usm
 # USM_SOURCES = src/vector-add-usm.cpp
